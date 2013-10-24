@@ -1,0 +1,621 @@
+<html>
+	<head>
+		<title>Wings of War Counter Helper</title>
+		<style>
+			/* http://meyerweb.com/eric/tools/css/reset/ 
+			   v2.0 | 20110126
+			   License: none (public domain)
+			*/
+
+			html, body, div, span, applet, object, iframe,
+			h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			a, abbr, acronym, address, big, cite, code,
+			del, dfn, em, img, ins, kbd, q, s, samp,
+			small, strike, strong, sub, sup, tt, var,
+			b, u, i, center,
+			dl, dt, dd, ol, ul, li,
+			fieldset, form, label, legend,
+			table, caption, tbody, tfoot, thead, tr, th, td,
+			article, aside, canvas, details, embed, 
+			figure, figcaption, footer, header, hgroup, 
+			menu, nav, output, ruby, section, summary,
+			time, mark, audio, video {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				font-size: 100%;
+				font: inherit;
+				vertical-align: baseline;
+			}
+			/* HTML5 display-role reset for older browsers */
+			article, aside, details, figcaption, figure, 
+			footer, header, hgroup, menu, nav, section {
+				display: block;
+			}
+			body {
+				line-height: 1;
+			}
+			ol, ul {
+				list-style: none;
+			}
+			
+			blockquote, q {
+				quotes: none;
+			}
+			
+			blockquote:before, blockquote:after,
+			q:before, q:after {
+				content: '';
+				content: none;
+			}
+
+			table {
+				border-collapse: collapse;
+				border-spacing: 0;
+			}
+
+			
+			h2	{
+				font-size: 1.1em;
+				padding: 5px;
+				color: white;
+			}
+
+			.dial {
+				width: 60px;
+				height: 60px;
+				border-radius: 30px;
+				background-color: #ece736;
+				text-align: center;
+				font-size: 1em;
+				margin: 10px;
+			}
+
+			.dial-small {
+				width: 30px;
+				height: 30px;
+				border-radius: 15px;
+				background-color: #ec8636;
+				text-align: center;
+				font-size: 0.5em;
+				margin: 5px;
+			}
+
+			.climb-counter {
+				display: inline-block;
+			}
+
+			.dot {
+				display:	inline-block;
+				width: 10px;
+				height: 10px;
+				border-radius: 5px;
+				background-color: #e2e2e2;
+				margin: 2px;
+			}
+
+			label {
+				float: left;
+				text-align: right;
+				margin-right: 15px;
+				width: 50px;
+			}
+
+			form.player {
+				background-color: #222020;
+				padding: 5px;
+				color: #FFF;
+			}
+
+			div.main-panel {
+				float: left;
+				width: 300px;
+				border: 2px;
+				border-style: solid;
+				border-color: #495c5e;
+				background-color: #58bfc6;
+				padding: 0px 10px;
+			}
+
+			div.panel {
+				margin-bottom: 5px;
+			}
+			div.panel + div.panel {
+				border-top: 1 dotted white;
+				padding-top: 1px;
+
+			}
+		
+			.action {
+		    padding: 5px 8px;
+		    margin: 0 5px;
+		    background: #222020;
+		    color: #FFF;
+		    font-size: 0.9em;
+			}
+
+			input.playerinfo {
+				width: 180px;
+			}
+
+			p {
+				font-size: 0.8em;
+			}
+
+			div.instructions {
+				padding: 2px;
+				color: white;
+			}
+
+			.instructions a {
+				color: #ece736;
+			}
+
+			div.help {
+				font-size: 0.8em;
+				margin-left: 35px;
+				color: #a74242;
+			}
+
+			h2 + div.help {
+				margin-left: 98px;
+			}
+
+			.dial-tick {
+				background-color: #a74242;
+			}
+			
+			body {
+				padding: 10px;
+				max-width: 1000px;
+				margin: 0 auto;
+				font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+				background-color: #374647;
+				font-size: 1em;
+			}
+
+		</style>
+
+
+	</head>
+
+
+	<body>
+	<div class="wrapper">
+	<div class="instructions">
+			<h3>Instructions</h3>
+			<p>Enter fuel points, starting altitude and climb rate (accepts range between 1 and 4). Hit the right buttons when manoeuvering for fuel consumption and altitude changes. You can manually correct the numbers any time. If you need more planes/players just open another browser tab to the <a href="http://funkybrain.net/bg-helpers/wow/index.html#" target="_blank">same url</a>. Tweet me @supamanu for questions and gushing praise.</p>
+	</div>
+	<div id="playerone" class="main-panel">
+		<div class="panel">
+			<h2>Player One</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+
+	<div id="playertwo" class="main-panel">
+		<div class="panel">
+			<h2>Player Two</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+
+	<div id="playerthree" class="main-panel">
+		<div class="panel">
+			<h2>Player Three</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+
+	<div id="playerfour" class="main-panel">
+		<div class="panel">
+			<h2>Player Four</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+
+	<div id="playerfive" class="main-panel">
+		<div class="panel">
+			<h2>Player Five</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+
+	<div id="playersix" class="main-panel">
+		<div class="panel">
+			<h2>Player Six</h2>
+			<form class="player">
+				<div>
+					<label for="title">Name</label>
+					<input class="playerinfo title" type="text" name="title"></input>
+				</div>
+				<div>
+					<label for="plane">Plane</label>		
+					<input class="playerinfo plane" type"text" name="plane"></input>
+				</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Fuel Capacity</h2>
+			<form>
+				<input class="dial fuel-capacity" type="text" name="fuel-capacity"></input>
+				<a class="action slow" href="#">slow mvr. (-1)</a>
+				<a class="action fast" href="#">fast mvr. (-2)</a>
+				<div class="help">&#8657; Enter fuel points</div>
+			</form>
+		</div>
+		<div class="panel">
+			<h2>Altimeter</h2>
+			<div class="help">&#8659 Enter climb rate</div>
+			<form>
+				<input class="dial altitude" type="text" name="altitude"></input>
+				<input class="dial-small climb-rate" type="text" name="climb-rate"></input>
+				<div class="climb-counter"></div>
+				<!-- todo: hide controls until theres a climb rate of non-zero? -->
+				<a class="action climb" href="#">climb</a>
+				<a class="action dive" href="#">dive</a>
+			</form>
+			<div class="help">&#8657; Enter starting altitude</div>
+		</div>
+	</div>
+</div>
+	</body>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+
+	$(document).ready(function() {
+    
+    var current_dot = 0;
+    var $el; // container to pass elements
+
+    // loop through each player to restore va.ues after tab shutdown
+		// $('.fuel-capacity').val(sessionStorage.fuel || 0);
+		// $('.altitude').val(sessionStorage.altitude || 0);
+		// $('.climb-rate').val(sessionStorage.climbrate || 0);
+		
+    $('.fuel-capacity').blur(function(event) {
+    	// find what player the dial belongs to
+    	var player_id = $(this).parents('.main-panel').attr("id");
+    	var fuel = "fuel" + "_" + player_id;
+    	sessionStorage.setItem(fuel, $(this).val());
+    	console.log(fuel + " : " + sessionStorage.getItem(fuel));
+    });
+
+
+    $('.altitude').blur(function(event) {
+    	var player_id = $(this).parents('.main-panel').attr("id");
+    	var altitude = "altitude" + "_" + player_id;
+    	sessionStorage.setItem(altitude, $(this).val());
+    	console.log(altitude + " : " + sessionStorage.getItem(altitude));
+    });
+
+    $('.climb-rate').blur(function(event) {
+			
+			// clear counters for this player
+	    $(this).next('.climb-counter').empty();
+
+			var cr = $(this).val(); // get value from input
+    	
+    	 	if (cr > 4) {
+    		cr = 4;
+    		$(this).val('4')
+    	}
+
+    	if (cr <= 0) {
+    		cr = 1;
+    		$(this).val('1')
+    	}
+    	
+  		// find out which player the dial belongs to 
+    	var player_id = $(this).parents('.main-panel').attr("id");
+    	var climbrate = "climbrate" + "_" + player_id;
+     	sessionStorage.setItem(climbrate, cr);
+	   	console.log(climbrate + " : " + sessionStorage.getItem(climbrate));
+
+	
+	    for (var i = cr; i > 0; i--) {
+	    	$(this).next('.climb-counter').append('<div class="dot">');
+    	};
+  
+    	current_dot = 0; // reset current_dot
+  
+    });
+		
+		// loop through each player and trigger
+		// $('.climb-rate').trigger('blur'); // trigger event in case page load with stored value
+
+
+    $('.slow').click(function() {
+    	burn($(this), 1);
+    });
+
+    $('.fast').click(function() {
+	    burn($(this), 2);
+    });
+
+
+    $('.dive').click(function(event) {
+
+  		// find out which player the dial belongs to 
+    	var player_id = $(this).parents('.main-panel').attr("id");
+    	var altitude = "altitude" + "_" + player_id;
+     	var new_alt = sessionStorage.getItem(altitude) - 1;
+
+    	if (new_alt <= 0) {
+
+				new_alt = 0; // alt never drops below zero
+
+    		// reset counters to grey except the first
+    		$(this).siblings('.climb-counter').children().each(function() {
+    			 $(this).css({"background-color": "#e2e2e2"});
+    			});
+
+ 			 	$(this).siblings('.climb-counter').children(':first-child').css({"background-color": "#ec8636"});
+    		
+    		current_dot = 1; // reset dot to second 				
+
+    	}	else {
+    		// reset counters to grey
+    		$(this).siblings('.climb-counter').children().each(function() {
+    			 $(this).css({"background-color": "#e2e2e2"});
+    			});
+
+    		current_dot = 0; // reset dot to first 
+
+    	};
+
+ 	  	sessionStorage.setItem(altitude, new_alt);
+ 	  	console.log(altitude + " : " + sessionStorage.getItem(altitude));
+   		$(this).siblings('.altitude').val(new_alt);
+   		// animate counter
+   		$el = $(this).siblings('.altitude');
+   		bang();
+
+    });
+
+
+    $('.climb').click(function(event) {
+    	
+    	// find out which player the dial belongs to 
+    	var player_id = $(this).parents('.main-panel').attr("id");
+    	var altitude = "altitude" + "_" + player_id;
+     	var climbrate = "climbrate" + "_" + player_id;
+
+			// increase dot click by one
+			current_dot += 1;    	
+    	console.log("current_dot: " + current_dot)
+
+    	if (current_dot >= sessionStorage.getItem(climbrate)) { 
+    	// cumulative number of clicks on climb higher than climb rate
+   	
+				var new_alt = parseInt(sessionStorage.getItem(altitude)) + 1;
+    	  sessionStorage.setItem(altitude, new_alt);
+
+    		$(this).siblings('.altitude').val(new_alt);
+    		
+    		// animate counter
+    		$el = $(this).siblings('.altitude');
+    		bang();
+
+    		// reset counters to grey
+    		$(this).siblings('.climb-counter').children().each(function() {
+    			 $(this).css({"background-color": "#e2e2e2"});
+    			});
+    		
+    		current_dot = 0; // reset dot to first 
+    	
+    	} else
+
+    	{
+    	
+    		// increase dot count
+    		// $('div.dot:nth-child(' + current_dot + ')').css({"background-color": "#ec8636"});
+    	  $(this).siblings('.climb-counter').children(':nth-child(' + current_dot + ')').css({"background-color": "#ec8636"});
+    	};
+
+
+    	console.log(altitude + " : " + sessionStorage.getItem(altitude));
+
+    });
+
+
+    var bang = function() {
+    	//console.log("bang");
+    	tick();
+    	setTimeout(tick, 200); // never use () in callback as it will ignore delay!!
+
+    };
+
+    var tick = function() {
+    	//console.log("debang");
+    	$el.toggleClass('dial-tick');
+    };
+
+    var burn = function (el, speed) {
+  		// find out which player the dial belongs to 
+    	var player_id = el.parents('.main-panel').attr("id");
+    	var fuel = "fuel" + "_" + player_id;
+    	newfuel = sessionStorage.getItem(fuel) - speed;
+    	if (newfuel <= 0) newfuel = 0;
+    	sessionStorage.setItem(fuel, newfuel)
+	   	console.log(fuel + " : " + sessionStorage.getItem(fuel));    	
+
+	   	// change the fuel capacity of the player
+    	el.siblings('.fuel-capacity').val(newfuel);
+    	
+    	// animate counter
+    	$el = el.siblings('.fuel-capacity');
+    	bang(); 	    	
+    }
+
+
+
+  });
+
+// for(var i=0, len=sessionStorage.length; i<len; i++) {
+//     var key = sessionStorage.key(i);
+//     var value = sessionStorage[key];
+//     console.log(key + " => " + value);
+// }
+
+	</script>
+
+</html>
+
